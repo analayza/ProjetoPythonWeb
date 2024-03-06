@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabela</title>
+</head>
+<body>
+        <h1>Tabelas das Cidades</h1>
+        <form ACTION="/tabela", method="POST">
+            <label>Escolha como manipular os dados, digite uma opção:
+            </label>
+            <input type="text" name="coluna">
+            <button type="submit">Filtrar</button>
+        </form>
+            {{colunas|safe}}
+</body>
+</html>

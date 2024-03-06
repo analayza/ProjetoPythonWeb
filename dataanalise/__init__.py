@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 def analisar():
     dados = pd.read_html('https://pt.wikipedia.org/wiki/Lista_de_munic%C3%ADpios_do_Brasil_por_taxa_de_homic%C3%ADdios')
@@ -22,7 +23,23 @@ def exibirgraficobarraseduc(dados):
     fig = px.bar(dados, x='municipio', y='somaedu')
     return fig
 
+def exibirgraficoemprego(dados):
+    fig = px.pie(dados, values='pessoalocupado', names='municipio', title='Pessoas empregadas por municipios')
+    return fig
 
+def exibirgraficoidebidh(dados):
+    fig = px.line(dados, x='idh', y='municipio')
+    return fig
+
+def gerartabela(nome_da_coluna):
+    if nome_da_coluna not in lerdados().columns:
+        return "Essa coluna não existe"
+    else:
+        fig = go.Figure(data=[go.Table(
+            header=dict(values=['Município', nome_da_coluna]),
+            cells=dict(values=[lerdados()['municipio'], lerdados()[nome_da_coluna]])
+        )])
+        return fig
 
 '''
 ['Municípios', 'Gentílico',

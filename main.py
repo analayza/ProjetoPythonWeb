@@ -5,12 +5,26 @@ import plotly.express as px
 
 app = Flask(__name__)
 
+
+@app.route('/cadastrarusuario', methods=['GET', 'POST'])
+def redirecionarcadastro():
+    if request.method == 'GET':
+        return render_template('cadastrarusuario.html')
+    elif request.method == 'POST':
+        login = str(request.form.get('nome'))
+        senha = str(request.form.get('senha'))
+        if dao.inserirusuer(login, senha, dao.conectardb()):
+            return render_template('index2.html')
+        else:
+            texto= 'Email já cadastrado'
+            return render_template('cadastrarusuario.html', msg=texto)
+
 @app.route('/login', methods=['POST'])
 def cadastrar_usuario():
     nome = str(request.form.get('nome'))
     senha = str(request.form.get('senha'))
 
-    if dao.verificarlogin(nome, senha):
+    if dao.verificarlogin(nome, senha, dao.conectardb()):
         return render_template('menu.html')
     else:
         return render_template('index2.html')
